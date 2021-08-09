@@ -2,8 +2,6 @@ package com.teste.funcionario.service.impl.validador;
 
 import static java.text.MessageFormat.format;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Component;
 
 import com.teste.funcionario.database.entidades.Funcionario;
@@ -19,6 +17,7 @@ public class ValidadorFuncionario extends AbstractValidator<Funcionario, Funcion
 	public void validateInsert(Funcionario funcionario) {
 		validarPrecisaoDeCampos(funcionario);
 		validarEmail(funcionario.getEmail());
+		validarNaoPossuiMaisDeUmCadastroParaOMesmoNis(funcionario);
 	}
 
 	@Override
@@ -29,7 +28,7 @@ public class ValidadorFuncionario extends AbstractValidator<Funcionario, Funcion
 	}
 
 	private void validarNaoPossuiMaisDeUmCadastroParaOMesmoNis(Funcionario funcionario) {
-		Funcionario funcionarioConflito = getRepository().findByNisAndNotEqualsId(funcionario.getNis(), Optional.of(funcionario.getId()));
+		Funcionario funcionarioConflito = getRepository().findByNisAndNotEqualsId(funcionario.getNis(), funcionario.getId());
 		
 		if (funcionarioConflito != null) {
 			throw new RuntimeException(format("Já existe o funcionario {0} com o NIS {1}", funcionarioConflito.getNomeCompleto(), 

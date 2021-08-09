@@ -13,4 +13,6 @@ public interface FuncionarioService {
 	void delete(Long id);
 
 	Funcionario update(Long id, Funcionario entity);
+
+	Funcionario findById(Long id);
 }

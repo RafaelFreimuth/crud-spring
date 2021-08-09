@@ -17,6 +17,9 @@ public interface GenericResource<ENT extends AbstractEntity> {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	default ENT save(@RequestBody ENT entity) { return null; };
 	
+	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	default ENT findById(@PathVariable Long id) {return null;}
+	
 	@PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	default ENT update(@PathVariable Long id, @RequestBody ENT entity) { return null; };
 	

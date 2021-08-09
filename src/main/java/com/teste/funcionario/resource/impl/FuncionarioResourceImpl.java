@@ -40,5 +40,10 @@ public class FuncionarioResourceImpl implements FuncionarioResource {
 	public Funcionario update(Long id, Funcionario entity) {
 		return funcionarioService.update(id, entity);
 	}
+	
+	@Override
+	public Funcionario findById(Long id) {
+		return funcionarioService.findById(id);
+	}
 
 }

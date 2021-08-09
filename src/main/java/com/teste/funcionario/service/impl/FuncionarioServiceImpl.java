@@ -43,4 +43,9 @@ public class FuncionarioServiceImpl extends AbstractService<Funcionario, Funcion
 		return super.update(id, entity);
 	}
 
+	@Override
+	public Funcionario findById(Long id) {
+		return repository.findById(id).orElse(null);
+	}
+
 }
