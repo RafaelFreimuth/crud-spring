@@ -1,8 +1,9 @@
 package com.teste.funcionario.service.impl.validador;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import java.text.MessageFormat;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,9 +28,8 @@ public class ValidadorFuncionarioTest {
 		Funcionario funcionario = new Funcionario();
 		funcionario.setNome("");
 		
-		Assertions.assertThatThrownBy(() -> validador.validarPrecisaoDeCampos(funcionario))
-				  .isInstanceOf(RuntimeException.class)
-				  .hasMessage("O campo nome precisa ter no minímo 2 caracteres.");
+		assertThatThrownBy(() -> validador.validarPrecisaoDeCampos(funcionario)).isInstanceOf(RuntimeException.class)
+			  			  														.hasMessage("O campo nome precisa ter no minímo 2 caracteres.");
 	}
 	
 	@Test
@@ -38,9 +38,8 @@ public class ValidadorFuncionarioTest {
 		Funcionario funcionario = new Funcionario();
 		funcionario.setNome(StringUtil.gerarString("A", 31));
 		
-		Assertions.assertThatThrownBy(() -> validador.validarPrecisaoDeCampos(funcionario))
-				  .isInstanceOf(RuntimeException.class)
-				  .hasMessage("O campo nome precisa ter no maximo 30 caracteres.");
+		assertThatThrownBy(() -> validador.validarPrecisaoDeCampos(funcionario)).isInstanceOf(RuntimeException.class)
+				  		   														.hasMessage("O campo nome precisa ter no maximo 30 caracteres.");
 	}
 	
 	@Test
@@ -50,9 +49,8 @@ public class ValidadorFuncionarioTest {
 		funcionario.setNome("RA");
 		funcionario.setSobrenome("A");
 		
-		Assertions.assertThatThrownBy(() -> validador.validarPrecisaoDeCampos(funcionario))
-				  .isInstanceOf(RuntimeException.class)
-				  .hasMessage("O campo sobrenome precisa ter no minímo 2 caracteres.");
+		assertThatThrownBy(() -> validador.validarPrecisaoDeCampos(funcionario)).isInstanceOf(RuntimeException.class)
+				  																.hasMessage("O campo sobrenome precisa ter no minímo 2 caracteres.");
 	}
 	
 	@Test
@@ -62,9 +60,8 @@ public class ValidadorFuncionarioTest {
 		funcionario.setNome("RA");
 		funcionario.setSobrenome(StringUtil.gerarString("A", 51));
 		
-		Assertions.assertThatThrownBy(() -> validador.validarPrecisaoDeCampos(funcionario))
-				  .isInstanceOf(RuntimeException.class)
-				  .hasMessage("O campo sobrenome precisa ter no máximo 50 caracteres.");
+		assertThatThrownBy(() -> validador.validarPrecisaoDeCampos(funcionario)).isInstanceOf(RuntimeException.class)
+						  														.hasMessage("O campo sobrenome precisa ter no máximo 50 caracteres.");
 	}
 	
 	@Test
@@ -75,9 +72,8 @@ public class ValidadorFuncionarioTest {
 		funcionario.setSobrenome("ALVES");
 		funcionario.setNis("1579845678");
 		
-		Assertions.assertThatThrownBy(() -> validador.validarPrecisaoDeCampos(funcionario))
-				  .isInstanceOf(RuntimeException.class)
-				  .hasMessage("O campo NIS precisa ter 11 caracteres.");
+		assertThatThrownBy(() -> validador.validarPrecisaoDeCampos(funcionario)).isInstanceOf(RuntimeException.class)
+				  																.hasMessage("O campo NIS precisa ter 11 caracteres.");
 	}
 	
 	@Test
@@ -88,17 +84,15 @@ public class ValidadorFuncionarioTest {
 		funcionario.setSobrenome("ALVES");
 		funcionario.setNis("1579845678A");
 		
-		Assertions.assertThatThrownBy(() -> validador.validarPrecisaoDeCampos(funcionario))
-				  .isInstanceOf(RuntimeException.class)
-				  .hasMessage("O campo NIS deve ser somente numeros.");
+		assertThatThrownBy(() -> validador.validarPrecisaoDeCampos(funcionario)).isInstanceOf(RuntimeException.class)
+				  																.hasMessage("O campo NIS deve ser somente numeros.");
 	}
 	
 	@Test
 	@DisplayName("Deve lançar exceção caso campo email não seja valido")
 	void deveLancarExcecaoCasoCampoEmailNaoSejaValido() throws Exception {
-		Assertions.assertThatThrownBy(() -> validador.validarEmail("teste"))
-				  .isInstanceOf(RuntimeException.class)
-				  .hasMessage(MessageFormat.format("O Email ({0}) não é valido.", "teste"));
+		assertThatThrownBy(() -> validador.validarEmail("teste")).isInstanceOf(RuntimeException.class)
+				  												 .hasMessage(MessageFormat.format("O Email ({0}) não é valido.", "teste"));
 	}
 	
 }

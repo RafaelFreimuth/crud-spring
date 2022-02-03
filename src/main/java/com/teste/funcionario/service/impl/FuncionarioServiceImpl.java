@@ -11,9 +11,11 @@ import com.teste.funcionario.service.impl.validador.ValidadorFuncionario;
 import com.teste.funcionario.util.service.AbstractService;
 
 @Service
-public class FuncionarioServiceImpl extends AbstractService<Funcionario, FuncionarioRepository, ValidadorFuncionario> implements FuncionarioService {
+public class FuncionarioServiceImpl extends AbstractService<Funcionario, 
+															FuncionarioRepository,
+															ValidadorFuncionario> 
+											implements FuncionarioService {
 	
-
 	protected FuncionarioServiceImpl() {
 		super(Funcionario.class, new String[] {
 				"nome",

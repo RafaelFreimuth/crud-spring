@@ -14,19 +14,23 @@ import com.teste.funcionario.util.entity.AbstractEntity;
 
 public interface GenericResource<ENT extends AbstractEntity> {
 
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, 
+				 produces = MediaType.APPLICATION_JSON_VALUE)
 	default ENT save(@RequestBody ENT entity) { return null; };
 	
-	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/{id}", 
+				produces = MediaType.APPLICATION_JSON_VALUE)
 	default ENT findById(@PathVariable Long id) {return null;}
 	
-	@PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(path = "/{id}", 
+				consumes = MediaType.APPLICATION_JSON_VALUE)
 	default ENT update(@PathVariable Long id, @RequestBody ENT entity) { return null; };
 	
 	@DeleteMapping(path = "/{id}")
 	default void delete(@PathVariable Long id) {};
 	
-	@GetMapping(path = "/paged", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/paged",
+				produces = MediaType.APPLICATION_JSON_VALUE)
 	default Page<ENT> getPaged(@RequestParam int pagina, 
 					   		   @RequestParam int size) { return Page.empty(); };
 }

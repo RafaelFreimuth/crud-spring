@@ -1,13 +1,13 @@
 package com.teste.funcionario.service.impl.validador;
 
+import static com.teste.funcionario.util.generic.StringUtil.isNotNullOrEmpty;
+import static com.teste.funcionario.util.generic.StringUtil.isNullOrEmpty;
 import static java.text.MessageFormat.format;
 
 import org.springframework.stereotype.Component;
 
 import com.teste.funcionario.database.entidades.Funcionario;
 import com.teste.funcionario.database.repository.FuncionarioRepository;
-import com.teste.funcionario.util.generic.EmailUtil;
-import com.teste.funcionario.util.generic.StringUtil;
 import com.teste.funcionario.util.validador.AbstractValidator;
 
 @Component
@@ -31,43 +31,49 @@ public class ValidadorFuncionario extends AbstractValidator<Funcionario, Funcion
 		Funcionario funcionarioConflito = getRepository().findByNisAndNotEqualsId(funcionario.getNis(), funcionario.getId());
 		
 		if (funcionarioConflito != null) {
-			throw new RuntimeException(format("Já existe o funcionario {0} com o NIS {1}", funcionarioConflito.getNomeCompleto(), 
-																						   funcionarioConflito.getNis()));
+			throw new RuntimeException(format("Já existe o funcionario {0} com o NIS {1}", 
+											  funcionarioConflito.getNomeCompleto(), 
+											  funcionarioConflito.getNis()));
 		}
 	}
 
 	protected void validarPrecisaoDeCampos(Funcionario funcionario) {
-		if (StringUtil.isNullOrEmpty(funcionario.getNome()) || funcionario.getNome().trim().length() < 2) {
+		String nomeFuncionario = funcionario.getNome();
+		String sobrenome = funcionario.getSobrenome();
+		String nis = funcionario.getNis();
+		
+		if (isNullOrEmpty(funcionario.getNome()) || nomeFuncionario.trim().length() < 2) {
 			throw new RuntimeException("O campo nome precisa ter no minímo 2 caracteres.");
 		}
 		
-		if (funcionario.getNome().trim().length() > 30) {
+		if (nomeFuncionario.length() > 30) {
 			throw new RuntimeException("O campo nome precisa ter no maximo 30 caracteres.");
 		}
 		
-		if (StringUtil.isNullOrEmpty(funcionario.getSobrenome()) || funcionario.getSobrenome().trim().length() < 2) {
+		if (isNullOrEmpty(funcionario.getSobrenome()) || sobrenome.trim().length() < 2) {
 			throw new RuntimeException("O campo sobrenome precisa ter no minímo 2 caracteres.");
 		}
 		
-		if (funcionario.getSobrenome().trim().length() > 50) {
+		if (sobrenome.length() > 50) {
 			throw new RuntimeException("O campo sobrenome precisa ter no máximo 50 caracteres.");
 		}
 		
-		if (StringUtil.isNullOrEmpty(funcionario.getNis()) || funcionario.getNis().trim().length() != 11) {
+		if (isNullOrEmpty(funcionario.getNis()) || nis.trim().length() != 11) {
 			throw new RuntimeException("O campo NIS precisa ter 11 caracteres.");
-		} else {
+		} 
+		else {
 			try {				
 				Long.valueOf(funcionario.getNis());
 			} catch (Exception e) {
-				throw new RuntimeException("O campo NIS deve ser somente numeros.");
+				throw new RuntimeException("O campo NIS deve conter somente numeros.");
 			}
 		}
 		
 	}
 
 	protected void validarEmail(String email) {
-		if (StringUtil.isNotNullOrEmpty(email)) {			
-			EmailUtil.validarEmail(email);
+		if (isNotNullOrEmpty(email)) {			
+			validarEmail(email);
 		}
 	}
 
